@@ -1,6 +1,8 @@
 # Summer project: Implementing CNNs on an FPSP
 Author: Benoît GUILLARD, bag1418
+
 Date: Summer 2019
+
 This repository contains the code written during my Summer Project.
 
 ## Content
@@ -15,7 +17,7 @@ The directory #6 contains small C++ demonstrations that run on the SCAMP5 device
 
 ## Software versions and environment
 ### Python scripts
-All the Python scripts (.py files) contained in this repository have been developed and tested locally, using Python 3.6.6, and the following environment: python_script_requirements.txt
+All the Python scripts (.py files) contained in this repository have been developed and tested locally, using Python 3.6.6, and the following environment: [python_script_requirements.txt](/blob/master/python_script_requirements.txt)
 
 ### SCAMP5 code
 The SCAMP5 code presented here (.cpp and .hpp files) has been developed and tested using the library version 0.9.8 and the host program 1.3.9 (see Jianing Chen's website: https://personalpages.manchester.ac.uk/staff/jianing.chen/scamp5d_lib_doc_html/index.html  )
