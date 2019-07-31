@@ -9,7 +9,7 @@ Furthermore, we give two versions of our quantisation/unquantisation macros: one
 
 Here are visual demonstrations of how it works:
 
-Signed quantisation, on the device: ![Signed Quantisation](https://gitlab.doc.ic.ac.uk/bag1418/cnns-on-fpsps/blob/assets/assets/Capture_signed_quantisation.PNG?raw=true)
+Signed quantisation, on the device: ![Signed Quantisation](https://gitlab.doc.ic.ac.uk/bag1418/cnns-on-fpsps/blob/assets/assets/Capture_signed_quantisation.PNG?inline=false)
 Unsigned quantisation, on the device: ![Unsigned Quantisation](https://gitlab.doc.ic.ac.uk/bag1418/cnns-on-fpsps/blob/assets/assets/Capture_unsigned_quantisation.PNG?raw=true)
 
 Signed quantisation, in a simulator: 
