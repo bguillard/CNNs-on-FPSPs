@@ -6,7 +6,7 @@ The trick we present here can be seen as a pre-compilation optimisation, and sav
 
 ## Background: profiling AnalogNet, with traditional matrix-vector multiplication
 
-Here is the breakdown of the elapsed time during one forward pass of AnalogNet on the SCAMP5 device:
+Here is the breakdown of the elapsed time during one forward pass of AnalogNet on the SCAMP5 device, after an image is captured:
 
 | Step                                   | Time taken (micro-seconds) | Total elapsed time (micro-seconds) |
 |----------------------------------------|----------------------------|------------------------------------|
@@ -15,7 +15,8 @@ Here is the breakdown of the elapsed time during one forward pass of AnalogNet o
 | Events reading and binning             | 273                        | 354                                |
 | Fully connected (2 layers)             | 389                        | 743                                |
 
-As we can see, a considerable amount of time is spent gathering events (ie. transferring data from the vision chip to the micro-controller), and computing the fully connected layers result. The former cannot really be improved, as we use the already optimised official SCAMP5 library to interface with the analog vision chip. However, there is room for improvement on the latter point, since the legacy AnalogNet only implements traditional double loops for matrix-vector multiplication.
+As we can see, a considerable amount of time is spent gathering events (ie. transferring data from the vision chip to the micro-controller), and computing the fully connected layers result. The former cannot really be improved, as we use the already optimised official SCAMP5 library to interface with the analog vision chip.
+However, there is room for improvement on the latter point, since the legacy AnalogNet only implements traditional double loops for matrix-vector multiplication. The current and standard implementation is in the form of:
 
 ```cpp
 code
@@ -33,7 +34,10 @@ int main(){
 }
 ```
 
-Note: we scripted the generation of C++ code for defining int arrays, based on numpy objects (see Python [code generation/weights_pck_to_cpp_unrolled_loop.py](code generation/weights_pck_to_cpp_unrolled_loop.py)).
+Note: we scripted the generation of C++ code for defining int arrays, based on numpy objects (see Python [Python code generation/weights_pck_to_cpp_unrolled_loop.py](./Python code generation/weights_pck_to_cpp_unrolled_loop.py)). This script takes a numpy 2 dimensional array as input that corresponds to the weights matrix of one of the fully connected layers, and simply parse it into a valid C++ code. This can then be directly copied and pasted into our SCAMP5 source code.
+
+
+For our demonstration purpose, we have isolated this fully connected network part, and created 
 
 The output we get from the SCAMP5 device with this explicit loop is the following:
 ```
