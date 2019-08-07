@@ -7,6 +7,7 @@ The trick we present here can be seen as a pre-compilation optimisation, and sav
 ## Background: profiling AnalogNet, with traditional matrix-vector multiplication
 
 Here is the breakdown of the elapsed time during one forward pass of AnalogNet on the SCAMP5 device:
+
 | Step                                   | Time taken (micro-seconds) | Total elapsed time (micro-seconds) |
 |----------------------------------------|----------------------------|------------------------------------|
 | Input binarisation                     | 13                         | 13                                 |
@@ -52,7 +53,7 @@ The generation of the code is scripted (see Python [code generation/weights_pck_
 
 
 This is what the C++ code now looks like:
-```c
+```cpp
 code
 array[][]
 void function(in, out, k, b){
