@@ -34,7 +34,7 @@ int main(){
 }
 ```
 
-Note: we scripted the generation of C++ code for defining int arrays, based on numpy objects (see Python [Python code generation/weights_pck_to_cpp_unrolled_loop.py](./Python code generation/weights_pck_to_cpp_unrolled_loop.py)). This script takes a numpy 2 dimensional array as input that corresponds to the weights matrix of one of the fully connected layers, and simply parse it into a valid C++ code. This can then be directly copied and pasted into our SCAMP5 source code.
+Note: we scripted the generation of C++ code for defining int arrays, based on numpy objects (see [Python code generation/weights_pck_to_cpp_unrolled_loop.py](./Python code generation/weights_pck_to_cpp_unrolled_loop.py)). This script takes a numpy 2 dimensional array as input that corresponds to the weights matrix of one of the fully connected layers, and simply parse it into a valid C++ code. This can then be directly copied and pasted into our SCAMP5 source code.
 
 
 For our demonstration purpose, we have isolated this fully connected network part, and created 
