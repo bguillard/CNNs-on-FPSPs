@@ -19,27 +19,41 @@ As we can see, a considerable amount of time is spent gathering events (ie. tran
 However, there is room for improvement on the latter point, since the legacy AnalogNet only implements traditional double loops for matrix-vector multiplication. The current and standard implementation is in the form of:
 
 ```cpp
-code
-array[][]
-void function(in, out, k, b){
-	for(){
-		for(){
-			...
+int weights[IN_SIZE][OUT_SIZE] = {{...},{...},...};
+int biases[OUT_SIZE] = {...};
+
+void fc_computation(const int weights[IN_SIZE][OUT_SIZE], const int biases[OUT_SIZE],
+							int in[IN_SIZE], int out[OUT_SIZE]){
+	long int partialSum;
+	for (int j=0; j<OUT_SIZE; j++){
+		partialSum = 0;
+		for (int i=0; i<IN_SIZE; i++){
+			partialSum += in[i]*weights[i][j];
 		}
+		out[j] = partialSum + biases[j];
 	}
 }
+
+
 int main(){
+	int input[IN_SIZE], output[OUT_SIZE];
 	...
-	function(...);
+	fc_computation(weights, biases, input, output);
+	...
 }
 ```
 
 Note: we scripted the generation of C++ code for defining int arrays, based on numpy objects (see [Python code generation/weights_pck_to_cpp_unrolled_loop.py](./Python code generation/weights_pck_to_cpp_unrolled_loop.py)). This script takes a numpy 2 dimensional array as input that corresponds to the weights matrix of one of the fully connected layers, and simply parse it into a valid C++ code. This can then be directly copied and pasted into our SCAMP5 source code.
 
 
-For our demonstration purpose, we have isolated this fully connected network part, and created 
+For our demonstration purpose, we have here isolated this fully connected network part. The program in [scamp5_main.cpp](./scamp5_main.cpp) implements our 2 layer network, with a vector of length 27 as input, 50 hidden units, and 10 output units. The weights, biases and input vector are constant, and their values correspond to typical weights of an AnalogNet architecture.
 
-The output we get from the SCAMP5 device with this explicit loop is the following:
+This explicit loop, corresponding to what is presented above, can be executed setting
+```cpp
+#define FC_COMPUTATION_TYPE 1
+```
+
+The output we then get from the SCAMP5 device is the following:
 ```
 It took 389 usec to run the FC network.
 FC result: -95993,157554,145256,94030,216396,-100540,20355,-29113,66564,-212817,
