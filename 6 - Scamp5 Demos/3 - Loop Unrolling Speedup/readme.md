@@ -2,7 +2,9 @@ The scamp5_main.cpp present in this directory contains a demonstration of the pr
 
 The trick we present here can be seen as a pre-compilation optimisation, and saves a considerable fraction of the total time needed for one forward pass of our CNNs.
 
-*Note: in all the discussed examples below, we use a 2 layer fully connected network, that takes vectors of length 27 as inputs, has 50 hidden units, and 10 output units.*
+*Notes:
+ * in all the discussed examples below, we use a 2 layer fully connected network, that takes vectors of length 27 as inputs, has 50 hidden units, and 10 output units
+ * when reporting an execution time, we only report one figure, and do not bother doing an average of multiple ones. This is because the execution time of a given portion of code is extremely stable on the SCAMP5 vision system, and can be considered as constant.*
 
 ## Background: profiling AnalogNet, with traditional matrix-vector multiplication
 
@@ -49,7 +51,7 @@ For our demonstration purpose, we have here isolated this fully connected networ
 
 This explicit loop, corresponding to what is presented above, can be executed setting
 ```cpp
-#define FC_COMPUTATION_TYPE 1
+#define FC_COMPUTATION_TYPE 0
 ```
 
 The output we then get from the SCAMP5 device is the following:
@@ -60,8 +62,8 @@ FC result: -95993,157554,145256,94030,216396,-100540,20355,-29113,66564,-212817,
 
 ## First step: unrolling the loop
 
-Here we can take advantage of two things:
- * the fact we know in advance (at compilation time), the number of iterations needed in each loop. This is because our vectors are of fixed size.
+In our case, we can take advantage of two things:
+ * the fact we know in advance (at compilation time), the number of iterations needed in each loop. This is because our vectors are all of fixed size.
  * the fact that we do not use all the 512KB available for storing the program and constant data.
 
 Based on these two points, we propose to unroll the loop before compilation. Using a python script, we generate C++ code that corresponds to the linear program equivalent to the loop presented above.
@@ -71,26 +73,46 @@ The generation of the code is scripted (see Python [code generation/weights_pck_
 
 This is what the C++ code now looks like:
 ```cpp
-code
-array[][]
-void function(in, out, k, b){
-	for(){
-		for(){
-			...
-		}
-	}
+int weights[IN_SIZE][OUT_SIZE] = {{...},{...},...};
+int biases[OUT_SIZE] = {...};
+
+void fc_computation(int in[IN_SIZE], int out[OUT_SIZE]){
+  out[0] =
+    in[0]*(weights[0][0]) +
+    ... +
+    in[IN_SIZE-1]*(weights[IN_SIZE-1][0]) +
+    (biases[0]);
+  ...
+  out[OUT_SIZE-1] =
+    in[0]*(weights[0][OUT_SIZE-1]) +
+    ... +
+    in[IN_SIZE-1]*(weights[IN_SIZE-1][OUT_SIZE-1]) +
+    (biases[OUT_SIZE-1]);
 }
+
 int main(){
-	...
-	function(...);
+  int input[IN_SIZE], output[OUT_SIZE];
+  ...
+  fc_computation(weights, biases, input, output);
+  ...
 }
 ```
 
-Output with unrolled loop and matrix array:
+
+For a demonstration of this, set
+```cpp
+#define FC_COMPUTATION_TYPE 1
+```
+in [scamp5_main.cpp](./scamp5_main.cpp).
+
+The output we get with this unrolled loop is the following:
 ```
 It took 374 usec to run the FC network.
 FC result: -95993,157554,145256,94030,216396,-100540,20355,-29113,66564,-212817,
 ```
+
+We are able to save 15 microseconds with this technique. This is not a substantial amount of time, but will be of great help for the next part.
+
 
 ## Second step: hardcoding the weights
 Output with unrolled loop and hardcoded weights:
