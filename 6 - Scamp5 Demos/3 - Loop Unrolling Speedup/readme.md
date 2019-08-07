@@ -3,7 +3,7 @@ The scamp5_main.cpp present in this directory contains a demonstration of the pr
 The trick we present here can be seen as a pre-compilation optimisation, and saves a considerable fraction of the total time needed for one forward pass of our CNNs.
 
 Notes:
- * in all the discussed examples below, we use a 2 layer fully connected network, that takes vectors of length 27 as inputs, has 50 hidden units, and 10 output units
+ * in all the discussed examples below, we use a 2 layer fully connected network, that takes vectors of length 27 as inputs, has 50 hidden units, applies a ReLU activation function on it, and 10 output units.
  * when reporting an execution time, we only report one figure, and do not bother doing an average of multiple ones. This is because the execution time of a given portion of code is extremely stable on the SCAMP5 vision system, and can be considered as constant.
 
 ## Background: profiling AnalogNet, with traditional matrix-vector multiplication
