@@ -2,18 +2,21 @@ The scamp5_main.cpp present in this directory contains a demonstration of the pr
 
 The trick we present here can be seen as a pre-compilation optimisation, and saves a considerable fraction of the total time needed for one forward pass of our CNNs.
 
+*Note: in all the discussed examples below, we use a 2 layer fully connected network, that takes vectors of length 27 as inputs, has 50 hidden units, and 10 output units*
+
 ## Background: profiling AnalogNet, with traditional matrix-vector multiplication
 
 Here is the breakdown of the elapsed time during one forward pass of AnalogNet on the SCAMP5 device:
-| Step  | Time needed (micro-seconds)|
-|-------|----------------------------|
-| step1 | 32                         |
-| step2 | 32                         |
-| TOTAL | 64                         |
+| Step                                   | Time taken (micro-seconds) | Total elapsed time (micro-seconds) |
+|----------------------------------------|----------------------------|------------------------------------|
+| Input binarisation                     | 13                         | 13                                 |
+| 3 Convolutions and output binarisation | 68                         | 81                                 |
+| Events reading and binning             | 273                        | 354                                |
+| Fully connected (2 layers)             | 389                        | 743                                |
 
-As we can see, the most considerable amount of time is spent gathering events (ie. transferring data from the vision chip to the micro-controller), and computing the fully connected layers result. The former cannot really be improved, as we use the already optimised official SCAMP5 library to interface with the analog vision chip. However, there is room for improvement on the latter point, since the legacy AnalogNet only implements traditional double loops for matrix-vector multiplication.
+As we can see, a considerable amount of time is spent gathering events (ie. transferring data from the vision chip to the micro-controller), and computing the fully connected layers result. The former cannot really be improved, as we use the already optimised official SCAMP5 library to interface with the analog vision chip. However, there is room for improvement on the latter point, since the legacy AnalogNet only implements traditional double loops for matrix-vector multiplication.
 
-```C++
+```cpp
 code
 array[][]
 void function(in, out, k, b){
@@ -49,7 +52,7 @@ The generation of the code is scripted (see Python [code generation/weights_pck_
 
 
 This is what the C++ code now looks like:
-```C++
+```c
 code
 array[][]
 void function(in, out, k, b){
@@ -89,14 +92,14 @@ In terms of speeding-up the fully connected layers computation, our last method 
 | Unrolled loop + hardcoded weights | 109                                                  | 28.0          |
 
 
-What interests us the most is what how it speeds up the total inference time of AnalogNet on the SCAMP5 vision system. In that regard, we also notice a considerable improvement:
+What really interests us is how it speeds up the total inference time of AnalogNet on the SCAMP5 vision system, of which the fully-connected computations is only a part. In that regard, we also notice a considerable improvement:
 
 
 | Method                            | Time for AnalogNet forward pass (micro-seconds) | % of baseline |
 |-----------------------------------|-------------------------------------------------|---------------|
-| Standard loop (baseline)          | ...                                             | 100           |
-| Unrolled loop                     | ...                                             | ....          |
-| Unrolled loop + hardcoded weights | ...                                             | ....          |
+| Standard loop (baseline)          | 743                                             | 100           |
+| Unrolled loop                     | 728                                             | 98.0          |
+| Unrolled loop + hardcoded weights | 463                                             | 62.3          |
 
 
 
