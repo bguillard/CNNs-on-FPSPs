@@ -2,7 +2,7 @@ The scamp5_main.cpp present in this directory contains a demonstration of the pr
 
 The trick we present here can be seen as a pre-compilation optimisation, and saves a considerable fraction of the total time needed for one forward pass of our CNNs.
 
-*Note: in all the discussed examples below, we use a 2 layer fully connected network, that takes vectors of length 27 as inputs, has 50 hidden units, and 10 output units*
+*Note: in all the discussed examples below, we use a 2 layer fully connected network, that takes vectors of length 27 as inputs, has 50 hidden units, and 10 output units.*
 
 ## Background: profiling AnalogNet, with traditional matrix-vector multiplication
 
@@ -23,23 +23,22 @@ int weights[IN_SIZE][OUT_SIZE] = {{...},{...},...};
 int biases[OUT_SIZE] = {...};
 
 void fc_computation(const int weights[IN_SIZE][OUT_SIZE], const int biases[OUT_SIZE],
-							int in[IN_SIZE], int out[OUT_SIZE]){
-	long int partialSum;
-	for (int j=0; j<OUT_SIZE; j++){
-		partialSum = 0;
-		for (int i=0; i<IN_SIZE; i++){
-			partialSum += in[i]*weights[i][j];
-		}
-		out[j] = partialSum + biases[j];
-	}
+              int in[IN_SIZE], int out[OUT_SIZE]){
+  long int partialSum;
+  for (int j=0; j<OUT_SIZE; j++){
+    partialSum = 0;
+    for (int i=0; i<IN_SIZE; i++){
+      partialSum += in[i]*weights[i][j];
+    }
+    out[j] = partialSum + biases[j];
+  }
 }
 
-
 int main(){
-	int input[IN_SIZE], output[OUT_SIZE];
-	...
-	fc_computation(weights, biases, input, output);
-	...
+  int input[IN_SIZE], output[OUT_SIZE];
+  ...
+  fc_computation(weights, biases, input, output);
+  ...
 }
 ```
 
