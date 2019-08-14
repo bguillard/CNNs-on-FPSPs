@@ -65,4 +65,18 @@ mean\_diff=\frac{1}{256*256}*\sum_{1\leq i,j\leq256}(input_{i,j}-result_{i,j}-bi
 As is done with the PSNR metric, the 100 values of STD we compute for one iteration value are averaged.
 
 ## Results
+Here are the figures we get:
+
+![Systematic bias](https://gitlab.doc.ic.ac.uk/bag1418/cnns-on-fpsps/blob/assets/assets/figure_bias.png?inline=false)
+
+![Peak Signal to Noise Ratio](https://gitlab.doc.ic.ac.uk/bag1418/cnns-on-fpsps/blob/assets/assets/figure_psnr.png?inline=false)
+
+![Standard Deviation](https://gitlab.doc.ic.ac.uk/bag1418/cnns-on-fpsps/blob/assets/assets/figure_std.png?inline=false)
+
+We can notice that:
+* the more we iterate our supposedly identity kernel, the more noise is introduced (PSNR decreases and STD increases).
+* the systematic bias is dependent on the input value.
+ 
+
+
 
