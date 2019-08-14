@@ -31,9 +31,9 @@ The analysis of the above created images is done in [1-compute_psnr_std_bias.py]
 
 We assume a noise model that is composed of a constant bias, and a centered random component, as follows:
 ```math
-result = input + bias + random noise
+result = input + bias + random\_noise
 ```
-with $`\mathbb{E}[random noise]=0`$
+with $`\mathbb{E}[random\_noise]=0`$
 
 
 ## Results
