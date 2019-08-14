@@ -35,8 +35,12 @@ result = id\_kernel^{iteration}(input) = input + bias + random\_noise
 ```
 with $`\mathbb{E}[random\_noise]=0`$.
 
-
-
+### Systematic bias
+For each iteration value, we have at hand 100 input/result pair. Each pair is composed of 2 256\*256 arrays.
+Using the centered nature of the random noise, we simply compute the average of the mean difference between the inputs and the results to get an unbiased estimate of the bias:
+```math
+bias_{iteration}=\frac{1}{100}\left[\sum_{k=1}^{100}\frac{1}{256*256}\sum_{1<i,j<256}((input_{iteration,k})_{i,j}-(result_{iteration,k})_{i,j})\right]
+```
 
 ## Results
 
