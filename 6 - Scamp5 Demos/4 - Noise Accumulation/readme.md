@@ -27,7 +27,7 @@ for iteration ranging from 1 to 8:
 The resulting images can be saved within the host application. We use this to collect 100 input/result pairs for each input value in [0, 5, 10, 60, 100, 120], for iterations ranging from 1 to 32 (2\*100\*6\*32=38400 images). We believed it important to not only save results, but inputs too, as they also are subject to random noise.
 
 ## Metrics computations
-The analysis of the above created images is done in [1-compute_psnr_std_bias.py](./1-compute_psnr_std_bias.py). We here describe how.
+Given one INPUT_VALUE, for each iteration value, we have at hand 100 input/result pair. Each pair is composed of 2 256\*256 arrays, saved as 8 bits greyscale .BMP files. The analysis of these images is done in [1-compute_psnr_std_bias.py](./1-compute_psnr_std_bias.py). We here describe how.
 
 We assume a noise model that is composed of a constant bias and a centered random component, as follows:
 ```math
@@ -36,10 +36,17 @@ result = id\_kernel^{iteration}(input) = input + bias + random\_noise
 with $`\mathbb{E}[random\_noise]=0`$.
 
 ### Systematic bias
-For each iteration value, we have at hand 100 input/result pair. Each pair is composed of 2 256\*256 arrays.
 Using the centered nature of the random noise, we simply compute the average of the mean difference between the inputs and the results to get an unbiased estimate of the bias:
 ```math
-bias_{iteration}=\frac{1}{100}\left[\sum_{k=1}^{100}\frac{1}{256*256}\sum_{1<i,j<256}((input_{iteration,k})_{i,j}-(result_{iteration,k})_{i,j})\right]
+bias_{iteration}=\frac{1}{100}\left[\sum_{k=1}^{100}\frac{1}{256*256}\sum_{1\leqi,j\leq256}((input_{iteration,k})_{i,j}-(result_{iteration,k})_{i,j})\right]
+```
+
+### PSNR
+A common measure of image degradation between a clean target image and its noisy version is the Peak Signal to Noise Ratio. It represents similarity between two images. Expressed in dB, the higher its value, the less noise is introduced by computations.
+
+For a given input/result pair, the PSNR is calculted as:
+```math
+PSNR=20*log_{10}\left(\frac{max\_value}{mean\_square\_error}\right)=20*log_{10}\left(\frac{255}{\sqrt{\frac{1}{256*256}*\sum_{1\leq i,j\leq256}(input_{i,j}-result_{i,j})^{2}}}\right)
 ```
 
 ## Results
