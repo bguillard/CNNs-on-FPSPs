@@ -67,11 +67,11 @@ As is done with the PSNR metric, the 100 values of STD we compute for one iterat
 ## Results
 Here are the figures we get:
 
-![Systematic bias](https://gitlab.doc.ic.ac.uk/bag1418/cnns-on-fpsps/blob/assets/assets/figure_bias.png?inline=false)
+![Systematic bias](https://gitlab.doc.ic.ac.uk/bag1418/cnns-on-fpsps/raw/assets/assets/figure_bias.png?inline=false)
 
-![Peak Signal to Noise Ratio](https://gitlab.doc.ic.ac.uk/bag1418/cnns-on-fpsps/blob/assets/assets/figure_psnr.png?inline=false)
+![Peak Signal to Noise Ratio](https://gitlab.doc.ic.ac.uk/bag1418/cnns-on-fpsps/raw/assets/assets/figure_psnr.png?inline=false)
 
-![Standard Deviation](https://gitlab.doc.ic.ac.uk/bag1418/cnns-on-fpsps/blob/assets/assets/figure_std.png?inline=false)
+![Standard Deviation](https://gitlab.doc.ic.ac.uk/bag1418/cnns-on-fpsps/raw/assets/assets/figure_std.png?inline=false)
 
 We can notice that:
 * the more we iterate our supposedly identity kernel, the more noise is introduced (PSNR decreases and STD increases).
