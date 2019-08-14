@@ -49,5 +49,20 @@ For a given input/result pair, the PSNR is calculted as:
 PSNR=20*log_{10}\left(\frac{max\_value}{mean\_square\_error}\right)=20*log_{10}\left(\frac{255}{\sqrt{\frac{1}{256*256}*\sum_{1\leq i,j\leq256}(input_{i,j}-result_{i,j}-bias)^{2}}}\right)
 ```
 
+Notice that the mean square error is in fact calculated on images on which to systematic bias previously computed is compensated.
+
+To get a more synthetic and meaningful result, we in fact only report the average of the 100 values computed for one INPUT_VALUE and iteration value.
+
+### STD
+To measure the random variability introduced by the stochastic noise, we computed its standard deviation accross one image.
+```math
+std=\sqrt{\frac{\sum_{1\leq i,j\leq256}\left(input_{i,j}-result_{i,j}-bias-mean\_diff\right)^{2}}{256*256-1}}
+```
+where
+```math
+mean\_diff=\frac{1}{256*256}*\sum_{1\leq i,j\leq256}(input_{i,j}-result_{i,j}-bias)
+```
+As is done with the PSNR metric, the 100 values of STD we compute for one iteration value are averaged.
+
 ## Results
 
