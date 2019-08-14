@@ -27,6 +27,14 @@ for iteration ranging from 1 to 8:
 The resulting images can be saved within the host application. We use this to collect 100 input/result pairs for each input value in [0, 5, 10, 60, 100, 120], for iterations ranging from 1 to 32 (2\*100\*6\*32=38400 images). We believed it important to not only save results, but inputs too, as they also are subject to random noise.
 
 ## Metrics computations
+The analysis of the above created images is done in [1-compute_psnr_std_bias.py](./1-compute_psnr_std_bias.py).
+
+We assume a noise model that is composed of a constant bias, and a centered random component, as follows:
+```math
+result = input + bias + random noise
+```
+with $`\mathbb{E}[random noise]=0`$
+
 
 ## Results
 
