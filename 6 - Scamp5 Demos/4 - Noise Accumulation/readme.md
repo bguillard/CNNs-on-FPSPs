@@ -75,7 +75,14 @@ Here are the figures we get:
 
 We can notice that:
 * the more we iterate our supposedly identity kernel, the more noise is introduced (PSNR decreases and STD increases).
-* the systematic bias is dependent on the input value.
+* the systematic bias is dependent on the input value, in a seemingly increasing manner: the higher the original input value, the higher the systematic bias.
+
+
+In addition to that, we can discern two phenomena that are slightly out of the general trend:
+* with an input value of 120, there is a stronger than usual signal degradation when running the kernel between 6 and 9 times. This is shown by the drop in PSNR value and the surge in STD value for these iteration numbers.
+* with an input of 60, the PSNR values seem considerably lower than with all other input values. However, as seen on the third figure, the input image we create contains a lot of internal variability (noise): the STD value for 0 iteration is anormally high. A further investigation shows this noise appears in the form of multiple spiking pixels. Those pixels are averaged out by applying the almost-identity kernel, which explains why the STD values for iteration counts strictly superior to zero rejoin the general trend. However, the corresponding PSNR values are heavily distorted, since we compare to a base image that is noisy.
+
+The causes of these two observations remain unexplained, and multiple runs of the experiment all exhibit the same singularities. This seems to suggest that the camera's behavior cannot be approximated as a linear model. Specific input values, combined with specific instructions result in out of trend results.
  
 
 
