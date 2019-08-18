@@ -35,7 +35,7 @@ ax1.legend(loc='lower right')
 plt.show()
 
 # Plot Bias
-x_bias = list(range(len(data[100]['bias'])))
+x_bias = [e+1 for e in list(range(len(data[100]['bias'])))]
 
 fig, ax1 = plt.subplots()
 ax1.set_ylabel('Systematic bias')
