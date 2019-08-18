@@ -54,7 +54,7 @@ Notice that the mean square error is in fact calculated on images on which the s
 To get a more synthetic and meaningful result, we in fact only report the average of the 100 values computed for one INPUT_VALUE and iteration value.
 
 ### STD
-To measure the random variability introduced by the stochastic noise, we computed its standard deviation accross one image.
+To measure the random variability introduced by stochastic noise, we compute its standard deviation within one image.
 ```math
 std=\sqrt{\frac{\sum_{1\leq i,j\leq256}\left(input_{i,j}-result_{i,j}-bias-mean\_diff\right)^{2}}{256*256-1}}
 ```
