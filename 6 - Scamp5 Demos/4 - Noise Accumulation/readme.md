@@ -44,7 +44,7 @@ bias_{iteration}=\frac{1}{100}\left[\sum_{k=1}^{100}\frac{1}{256*256}\sum_{1\leq
 ### PSNR
 A common measure of image degradation between a clean target image and its noisy version is the Peak Signal to Noise Ratio. It represents similarity between two images. Expressed in dB, the higher its value, the less noise is introduced by computations.
 
-For a given input/result pair, the PSNR is calculted as:
+For a given input/result pair, the PSNR is calculated as:
 ```math
 PSNR=20*log_{10}\left(\frac{max\_value}{mean\_square\_error}\right)=20*log_{10}\left(\frac{255}{\sqrt{\frac{1}{256*256}*\sum_{1\leq i,j\leq256}(input_{i,j}-result_{i,j}-bias)^{2}}}\right)
 ```
