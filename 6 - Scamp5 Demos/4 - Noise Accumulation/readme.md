@@ -49,7 +49,7 @@ For a given input/result pair, the PSNR is calculated as:
 PSNR=20*log_{10}\left(\frac{max\_value}{mean\_square\_error}\right)=20*log_{10}\left(\frac{255}{\sqrt{\frac{1}{256*256}*\sum_{1\leq i,j\leq256}(input_{i,j}-result_{i,j}-bias)^{2}}}\right)
 ```
 
-Notice that the mean square error is in fact calculated on images on which to systematic bias previously computed is compensated.
+Notice that the mean square error is in fact calculated on images on which the systematic bias previously computed is subtracted, to compensate for it.
 
 To get a more synthetic and meaningful result, we in fact only report the average of the 100 values computed for one INPUT_VALUE and iteration value.
 
