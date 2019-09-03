@@ -1,0 +1,1 @@
+reencode_and_merge.py re-encodes the files placed in the 'files_to_merge_and_reencode' directory, from utf-16 to utf-8. The files correspond to the fractionned output of the host program, which has an output limit of 50000 lines. The first file can often be discarded, as it contains pre-acquisition data.

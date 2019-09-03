@@ -1,0 +1,1 @@
+The Retraining_FC_layers.ipynb file is a Colab notebook used to retrain the fully connected layers. The .txt input files mentionned in the early cells can be found under the assets branch, in the assets/noisy_data_reacquisition/ folder.
