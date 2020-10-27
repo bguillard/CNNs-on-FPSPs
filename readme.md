@@ -23,6 +23,6 @@ All the Python scripts (.py files) contained in this repository have been develo
 The SCAMP5 code presented here (.cpp and .hpp files) has been developed and tested using the library version 0.9.8 and the host program 1.3.9 (see Jianing Chen's website: https://personalpages.manchester.ac.uk/staff/jianing.chen/scamp5d_lib_doc_html/index.html  )
 
 ### Colab Notebooks
-All the Python notebooks contained in this repository have been developed and tested on Google Colab GPU instances. As of August 2019, this means Python 3.6.8, and the following environment: [python_notebook_requirement.txt](/python_notebook_requirement.txt)
+All the Python notebooks contained in this repository have been developed and tested on Google Colab GPU instances. As of August 2019, this means Python 3.6.8, and the following environment: [python_notebook_requirements.txt](/python_notebook_requirements.txt)
 
 
